@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "https:nana-kwao.github.io/milesplatform/",
+  base: "https://nana-kwao.github.io/milesplatform/",
   server: {
     proxy: {
       "/api": {

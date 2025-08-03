@@ -21,13 +21,8 @@ app.get("/", (req, res) => {
   }
 });
 
-app.get("/api", (req, res) => {
-  res.send("Server Running");
-});
-
 app.post("/api/signup", async (req, res) => {
   try {
-    console.log("Received signup request");
     const { fullname, username, telephone, email, password } = req.body;
 
     // Check for required fields

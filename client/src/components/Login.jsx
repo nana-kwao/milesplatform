@@ -18,13 +18,16 @@ const Login = () => {
 
   const login = async () => {
     try {
-      let sendDataToDB = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      let sendDataToDB = await fetch(
+        "https://milesplatform.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
       return sendDataToDB.json();
     } catch (error) {
       console.log(error.message);

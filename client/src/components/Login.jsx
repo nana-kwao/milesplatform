@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import { useState } from "react";
+import login from "../services/login";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -16,30 +17,12 @@ const Login = () => {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const login = async () => {
-    try {
-      let sendDataToDB = await fetch(
-        "https://milesplatform.onrender.com/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
-      return sendDataToDB.json();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   const res = (event) => {
     if (event) event.preventDefault();
-    login()
+    login(userData)
       .then((res) => {
         console.log(res);
-        if (res.success === "logged in") {
+        if (res.message === "login successful") {
           setSuccess(true);
           setResponse(true);
           setTimeout(() => {

@@ -1,29 +1,23 @@
-const signup = async () => {
-  const data = {
-    fullname: "Freiku Nana Kwao",
-    username: "nanakwao",
-    telephone: "233559082614",
-    email: "nanakwaofreiku@gmail.com",
-    password: "nana",
-  };
-
+const signup = async (userData) => {
   try {
-    let sendDataToDB = await fetch("/api/signup", {
+    const response = await fetch("/api/signup", {
       method: "POST",
       headers: {
-        "Content-Type": "Application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(userData),
     });
-    return sendDataToDB.json();
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Signup failed");
+    }
+
+    return await response.json();
   } catch (error) {
-    console.log(error.message);
+    console.error("Signup error:", error.message);
+    return { error: error.message };
   }
 };
 
-const res = () => {
-  signup()
-    .then((res) => console.log(res))
-    .catch((error) => console.log(error));
-};
-
+export default signup;

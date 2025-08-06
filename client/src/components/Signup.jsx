@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Menu from "./Menu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import signup from "../services/signup";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -21,30 +22,12 @@ const Signup = () => {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const signup = async () => {
-    try {
-      let sendDataToDB = await fetch(
-        "https://milesplatform.onrender.com/api/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
-      return sendDataToDB.json();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   const res = (event) => {
     if (event) event.preventDefault();
-    signup()
+    signup(userData)
       .then((res) => {
         console.log(res);
-        if (res.success === "created") {
+        if (res.message === "user account created") {
           setSuccess(true);
           setResponse(true);
           setTimeout(() => {

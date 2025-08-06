@@ -1,51 +1,16 @@
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import signup from "../services/signup";
+import { useContext } from "react";
+import userContext from "../store/useContext";
 
 const Signup = () => {
-  const [userData, setUserData] = useState({
-    fullname: "",
-    username: "",
-    telephone: "",
-    email: "",
-    password: "",
-  });
-  const [response, setResponse] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const navigateToDashboard = useNavigate();
-  const navigateToLogin = useNavigate();
-
-  const handleUserData = (e) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const res = (event) => {
-    if (event) event.preventDefault();
-    signup(userData)
-      .then((res) => {
-        console.log(res);
-        if (res.message === "user account created") {
-          setSuccess(true);
-          setResponse(true);
-          setTimeout(() => {
-            navigateToDashboard("/dashboard");
-          }, 1000);
-        } else {
-          setResponse(false);
-          setSuccess(false);
-          setTimeout(() => {
-            navigateToLogin("/home/login");
-          }, 1000);
-        }
-      })
-      .catch((error) => {
-        setResponse(false);
-        console.log(error);
-      });
-  };
+  const {
+    userSignupData,
+    signupRes,
+    signupSuccess,
+    handleSignupUserData,
+    responseFromSignup,
+  } = useContext(userContext);
 
   return (
     <>
@@ -58,15 +23,15 @@ const Signup = () => {
             <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
           </div>
           <div className="wrapForm">
-            <form onSubmit={res}>
+            <form onSubmit={responseFromSignup}>
               <div className="inputWrapper">
                 <label htmlFor="fullname">Fullname</label>
                 <input
                   type="text"
                   name="fullname"
                   id="fullname"
-                  value={userData.fullname}
-                  onChange={handleUserData}
+                  value={userSignupData.fullname}
+                  onChange={handleSignupUserData}
                   required
                 />
               </div>
@@ -76,8 +41,8 @@ const Signup = () => {
                   type="text"
                   name="username"
                   id="username"
-                  value={userData.username}
-                  onChange={handleUserData}
+                  value={userSignupData.username}
+                  onChange={handleSignupUserData}
                   required
                 />
               </div>
@@ -89,8 +54,8 @@ const Signup = () => {
                   id="telephone"
                   pattern="[0-9]{10}"
                   placeholder="e.g 2332002000"
-                  value={userData.telephone}
-                  onChange={handleUserData}
+                  value={userSignupData.telephone}
+                  onChange={handleSignupUserData}
                   required
                 />
               </div>
@@ -100,8 +65,8 @@ const Signup = () => {
                   type="email"
                   name="email"
                   id="email"
-                  value={userData.email}
-                  onChange={handleUserData}
+                  value={userSignupData.email}
+                  onChange={handleSignupUserData}
                   required
                 />
               </div>
@@ -111,19 +76,19 @@ const Signup = () => {
                   type="password"
                   name="password"
                   id="password"
-                  value={userData.password}
-                  onChange={handleUserData}
+                  value={userSignupData.password}
+                  onChange={handleSignupUserData}
                   required
                 />
               </div>
-              {success && (
+              {signupSuccess && (
                 <div className="accountStatus">
-                  {success
+                  {signupSuccess
                     ? "Account Created Successfully"
                     : "Account Already Exits"}
                 </div>
               )}
-              <button disabled={response}>Signup</button>
+              <button disabled={signupRes}>Signup</button>
               <div className="noAccWrapper">
                 <p>
                   <span>Already has an account? </span>

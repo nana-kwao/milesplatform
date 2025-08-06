@@ -35,7 +35,11 @@ const signupController = async (req, res, next) => {
 
     await newUser.save();
     await closeDB();
-    return res.status(201).json({ message: "user account created" });
+    return res.status(201).json({
+      message: "user account created",
+      username: username,
+      userID: newUser._id,
+    });
   } catch (error) {
     next(error);
   }

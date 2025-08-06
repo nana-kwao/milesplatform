@@ -20,12 +20,14 @@ const loginController = async (req, res, next) => {
     if (!verifyHP)
       return res.status(401).json({
         message: "incorrect password",
-        username: userExist.username,
-        userID: userExist._id,
       });
 
     await closeDB();
-    return res.status(201).json({ message: "login successful" });
+    return res.status(201).json({
+      message: "login successful",
+      username: userExist.username,
+      userID: userExist._id,
+    });
   } catch (error) {
     next(error);
   }

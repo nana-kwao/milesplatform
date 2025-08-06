@@ -2,8 +2,7 @@ import { useState } from "react";
 import login from "../services/login";
 import signup from "../services/signup";
 import { useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
-import userContext from "./useContext";
+import UserContext from "./useContext";
 
 const UserProvider = ({ children }) => {
   const navigateToDashboard = useNavigate();
@@ -84,7 +83,7 @@ const UserProvider = ({ children }) => {
   };
 
   return (
-    <userContext.Provider
+    <UserContext.Provider
       value={{
         userLoginData,
         loginRes,
@@ -99,7 +98,7 @@ const UserProvider = ({ children }) => {
       }}
     >
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 };
 

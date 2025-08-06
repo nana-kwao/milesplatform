@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
 import { useContext } from "react";
-import userContext from "../store/useContext";
+import UserContext from "../store/useContext";
 const Login = () => {
   const {
     userLoginData,
@@ -9,7 +9,7 @@ const Login = () => {
     loginSuccess,
     handleUserLoginData,
     responseFromLogin,
-  } = useContext(userContext);
+  } = useContext(UserContext);
 
   return (
     <>
